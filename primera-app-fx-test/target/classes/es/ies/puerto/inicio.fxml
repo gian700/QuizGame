@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="414.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ies.puerto.controller.InicioController">
+<Pane prefHeight="414.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ies.puerto.controller.InicioController">
    <children>
-      <Button fx:id="cerrarSecionBoton" layoutX="185.0" layoutY="341.0" mnemonicParsing="false" onAction="#cerrarClick" text="Cerrar sesión" />
       <Button fx:id="ajustesBoton" layoutX="389.0" layoutY="14.0" mnemonicParsing="false" onAction="#ajustesClick" text="ajustes" />
-      <Button fx:id="jugarBoton" layoutX="203.0" layoutY="195.0" mnemonicParsing="false" onAction="#jugarClick" prefHeight="25.0" prefWidth="50.0" text="Jugar" />
-      <Button fx:id="puntuaciones" layoutX="185.0" layoutY="251.0" mnemonicParsing="false" onAction="#puntuacionesClick" text="Puntuaciones" />
-      <Text layoutX="72.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pregunta2" wrappingWidth="312.13671875">
+      <Text layoutX="53.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pregunta2" wrappingWidth="369.13671875">
          <font>
             <Font size="67.0" />
          </font>
       </Text>
+      <HBox alignment="CENTER" layoutY="164.0" prefHeight="206.0" prefWidth="456.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="206.0" prefWidth="352.0" spacing="25.0">
+               <children>
+                  <Button fx:id="jugarBoton" mnemonicParsing="false" onAction="#jugarClick" prefHeight="25.0" prefWidth="80.0" text="Jugar">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="puntuaciones" mnemonicParsing="false" onAction="#puntuacionesClick" prefHeight="24.0" prefWidth="143.0" text="Puntuaciones" />
+                  <Button fx:id="cerrarSecionBoton" mnemonicParsing="false" onAction="#cerrarClick" text="Cerrar sesión">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </Pane>

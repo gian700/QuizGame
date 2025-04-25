@@ -50,7 +50,7 @@ public class InicioController extends AbstractController{
 
     @FXML
     protected void puntuacionesClick(){
-        cambiarPagina(puntuaciones,"logros");
+        cambiarPagina(puntuaciones,"Posicion");
     }
 
     @FXML

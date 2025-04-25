@@ -72,7 +72,7 @@ public class RegistroController extends AbstractController {
             textMensaje.setText(ConfigManager.ConfigProperties.getProperty("usuarioExistente"));
             return;
         }
-        usuario = new Usuario(textFiledUsuario.getText().toString(), textFieldPassword.getText().toString(), "en", 0);
+        usuario = new Usuario(textFiledUsuario.getText().toString(), textFieldPassword.getText().toString(), "Eng", 0);
         boolean comprobar = usuarioManager.crearUsuario(usuario);
 
         if (!comprobar) {

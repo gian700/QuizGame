@@ -97,6 +97,7 @@ public class QuizController extends AbstractController{
 
     @FXML
     protected void comprobar(){
+        System.out.println(usuario.getPuntuacion());
         boolean correcta;
         usuario.setPreguntasRespondidas(usuario.getPreguntasRespondidas()+1);
         usuario.setPreguntasRespondidasTotal(usuario.getPreguntasRespondidasTotal()+1);
@@ -129,8 +130,11 @@ public class QuizController extends AbstractController{
         if (ConfigManager.ValoresConfig.getPreguntas().isEmpty()) {
             return;
         }
-        if (usuario.getPreguntasRespondidas()==1) {
+        if (usuario.getPreguntasRespondidas()==7) {
             continuar();
+            if (usuario.getPuntuacion() == 0) {
+                return;
+            }
             usuario.remove();
         }
         PauseTransition pausa = new PauseTransition(Duration.millis(550));
@@ -162,7 +166,7 @@ public class QuizController extends AbstractController{
                 listaBooleans.add(false);   
             }
 
-            for (int i = 0; i < 6+usuario.getCorrectas(); i++) {
+            for (int i = 0; i < usuario.getCorrectas(); i++) {
                 listaBooleans.set(i, true);
             }
             Collections.shuffle(listaBooleans);
@@ -199,6 +203,7 @@ public class QuizController extends AbstractController{
         } catch (SQLException e) {
         }    
         usuario.remove();
+        usuario.setPuntuacion(0);
         usuario.setPreguntasRespondidasTotal(0);
         cambiarPagina(opcion1, "inicio");
     }
@@ -230,44 +235,43 @@ public class QuizController extends AbstractController{
      * @param sectores
      */
     public void mostrarRuletaYSorteo(List<Boolean> sectores) {
-    Alert ruleta = new Alert(Alert.AlertType.INFORMATION);
-    ruleta.setTitle("Resultado de la Ruleta");
+        Alert ruleta = new Alert(Alert.AlertType.INFORMATION);
 
-    HBox visual = new HBox(10);
-    visual.setAlignment(Pos.CENTER);
+        HBox visual = new HBox(10);
+        visual.setAlignment(Pos.CENTER);
 
-    for (Boolean sector : sectores) {
-        Circle c = new Circle(20);
-        c.setFill(sector ? Color.LIMEGREEN : Color.CRIMSON);
-        visual.getChildren().add(c);
+        for (Boolean sector : sectores) {
+            Circle c = new Circle(20);
+            c.setFill(sector ? Color.LIMEGREEN : Color.CRIMSON);
+            visual.getChildren().add(c);
+        }
+
+        // Elegir sector ganador
+        int indiceElegido = new Random().nextInt(sectores.size());
+        Circle elegido = (Circle) visual.getChildren().get(indiceElegido);
+        elegido.setStroke(Color.GOLD);
+        elegido.setStrokeWidth(4);
+
+        // Crear un mensaje visual combinado
+        Label mensaje = new Label();
+        mensaje.setFont(Font.font(16));
+        mensaje.setTextAlignment(TextAlignment.CENTER);
+
+        if (!sectores.get(indiceElegido)) {
+            mensaje.setText("¡Perdiste!");
+        } else {
+            usuario.sumarPuntuacion(1000);
+            mensaje.setText("Continuas");
+        }
+
+        VBox contenido = new VBox(15, mensaje, visual);
+        contenido.setAlignment(Pos.CENTER);
+        ruleta.getDialogPane().setContent(contenido);
+
+        ruleta.showAndWait();
+
+        if (!sectores.get(indiceElegido)) {
+            perder(); // Después de mostrar la ruleta
+        }
     }
-
-    // Elegir sector ganador
-    int indiceElegido = new Random().nextInt(sectores.size());
-    Circle elegido = (Circle) visual.getChildren().get(indiceElegido);
-    elegido.setStroke(Color.GOLD);
-    elegido.setStrokeWidth(4);
-
-    // Crear un mensaje visual combinado
-    Label mensaje = new Label();
-    mensaje.setFont(Font.font(16));
-    mensaje.setTextAlignment(TextAlignment.CENTER);
-
-    if (!sectores.get(indiceElegido)) {
-        mensaje.setText("¡Perdiste!");
-    } else {
-        usuario.sumarPuntuacion(1000);
-        mensaje.setText("Continuas");
-    }
-
-    VBox contenido = new VBox(15, mensaje, visual);
-    contenido.setAlignment(Pos.CENTER);
-    ruleta.getDialogPane().setContent(contenido);
-
-    ruleta.showAndWait();
-
-    if (!sectores.get(indiceElegido)) {
-        perder(); // Después de mostrar la ruleta
-    }
-}
 }

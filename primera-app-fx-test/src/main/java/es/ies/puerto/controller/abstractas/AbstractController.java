@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 
 public abstract class AbstractController {
 
-    protected Button botonInutil;
-
     /**
      * Metodo que permite cambiar la pagina
      * @param boton
@@ -20,6 +18,7 @@ public abstract class AbstractController {
     protected void cambiarPagina(Button boton, String pagina) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource(pagina+".fxml"));
+
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) boton.getScene().getWindow();
             stage.setResizable(false);

@@ -2,7 +2,7 @@ package es.ies.puerto.model;
 import java.util.Objects;
 
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario>{
 
     String nombre;
     String contrasenia;
@@ -124,5 +124,16 @@ public class Usuario {
             ", preguntasRespondidas='" + getPreguntasRespondidas() + "'" +
             ", correctas='" + getCorrectas() + "'" +
             "}";
+    }
+
+    @Override
+    public int compareTo(Usuario otroUsuario) {
+        if (this.puntuacionMaxima > otroUsuario.getPuntuacionMaxima()) {
+            return -1; 
+         } 
+         if (this.puntuacionMaxima < otroUsuario.getPuntuacionMaxima()) {
+            return 1; 
+         } 
+         return 0; 
     }
 }
